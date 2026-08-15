@@ -88,6 +88,3 @@ services:
 volumes:
   cache:
   postgres_data:
-
-env_file:
-  - .env
