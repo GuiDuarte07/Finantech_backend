@@ -19,7 +19,7 @@ services:
         condition: service_healthy
 
   database.pgs:
-    image: postgres:latest
+    image: postgres:17
     restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
@@ -30,7 +30,7 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -88,3 +88,6 @@ services:
 volumes:
   cache:
   postgres_data:
+
+env_file:
+  - .env
