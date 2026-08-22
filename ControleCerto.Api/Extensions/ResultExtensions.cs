@@ -5,6 +5,21 @@ namespace ControleCerto.Extensions
 {
     public static class ResultExtensions
     {
+        public static IActionResult HandleReturnResult(this Result result)
+        {
+            if (result.IsSuccess)
+            {
+                return new NoContentResult();
+            }
+
+            var errorPayload = ErrorResponse.FromAppError(result.Error);
+
+            return new ObjectResult(errorPayload)
+            {
+                StatusCode = errorPayload.Code
+            };
+        }
+
         public static IActionResult HandleReturnResult<T>(this Result<T> result)
         {
             if (result.IsSuccess)
